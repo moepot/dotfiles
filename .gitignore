@@ -1,0 +1,7 @@
+*.swp
+.vagrant
+*.retry
+*.DS_Store
+*.LSOverride
+Thumbs.db
+.bundle

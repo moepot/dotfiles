@@ -1,0 +1,26 @@
+[user]
+	name = Remo Wenger
+	email = privat@remowenger.ch
+  signingkey = CC629882AADF2BB1
+[core]
+  editor = vi
+  excludesfile = ~/.gitignore
+[web]
+  browser = google-chjrome
+[credential]
+  helper = osxkeychain
+[diff]
+  tool = kdiff3
+[difftool]
+  prompt = false
+[merge]
+  tool = kdiff3
+[commit]
+  gpgsign = true
+[log]
+	showSignature = true
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
