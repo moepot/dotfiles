@@ -51,6 +51,22 @@ knownrm() {
   fi
 }
 
+# Set default editor
+export EDITOR=vi
+
+# Makes new Dir and jumps inside
+mcd () { mkdir -p "$1" && cd "$1"; }
+
+# Moves a file to the MacOS trash
+trash () { command mv "$@" ~/.Trash ; }
+
+# Opens any file in MacOS Quicklook Preview
+ql () { qlmanage -p "$*" >& /dev/null; }
+
+# Print public facing IP address
+alias myip='curl ifconfig.co'
+
+
 
 # Ask for confirmation when 'prod' is in a command string.
 #prod_command_trap () {
