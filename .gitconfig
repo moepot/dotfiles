@@ -1,6 +1,7 @@
 [user]
   name = Remo Wenger
   email = privat@remowenger.ch
+  #signingkey = 1DCCAF2D53913C7063DF7904CC629882AADF2BB1
   signingkey = CC629882AADF2BB1
 [core]
   editor = vi
@@ -22,3 +23,5 @@
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
+[http "https://bitbucket.falconpb.net/"]
+	sslVerify = false

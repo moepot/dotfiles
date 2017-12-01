@@ -24,9 +24,9 @@ fi
 
 
 # Super useful Docker container oneshots.
-# Usage: dockrun, or dockrun [centos7|fedora24|debian8|ubuntu1404|etc.]
+# Usage: dockrun, or dockrun [organization/image]
 dockrun() {
-  docker run -it geerlingguy/docker-"${1:-centos7}"-ansible /bin/bash
+  docker run -v "`pwd`:/media/volume/" -it "${1:-geerlingguy/docker-centos7-ansible}" /bin/bash
 }
 
 
@@ -66,6 +66,8 @@ ql () { qlmanage -p "$*" >& /dev/null; }
 # Print public facing IP address
 alias myip='curl ifconfig.co'
 
+# Override xargs with GNU xargs
+alias xargs='gxargs'
 
 
 # Ask for confirmation when 'prod' is in a command string.
@@ -86,3 +88,10 @@ alias myip='curl ifconfig.co'
 #trap prod_command_trap DEBUG
 
 
+# initializes a buildenv environment (mimacom)
+buildenv() { curl -o- "https://raw.githubusercontent.com/mimacom/buildenv/master/init-docker-buildenv.sh?unique=$(uuidgen)" | /bin/bash }
+
+# changes ansible vault password file
+setvault() { ln -f -s ~/.ansible/vault_password_file.$1 ~/.ansible/vault_password_file }
+
+export bamboo_VAULT_PASSWORD=`cat ~/.ansible/vault_password_file`
