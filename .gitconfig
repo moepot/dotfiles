@@ -18,6 +18,8 @@
   gpgsign = true
 [log]
   showSignature = true
+[color]
+  ui = true
 [filter "lfs"]
   required = true
   clean = git-lfs clean -- %f
