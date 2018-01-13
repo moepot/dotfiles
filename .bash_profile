@@ -67,7 +67,7 @@ ql () { qlmanage -p "$*" >& /dev/null; }
 alias myip='curl ifconfig.co'
 
 # Override xargs with GNU xargs
-alias xargs='gxargs'
+#alias xargs='gxargs'
 
 
 # Ask for confirmation when 'prod' is in a command string.
