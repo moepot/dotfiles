@@ -95,3 +95,6 @@ buildenv() { curl -o- "https://raw.githubusercontent.com/mimacom/buildenv/master
 setvault() { ln -f -s ~/.ansible/vault_password_file.$1 ~/.ansible/vault_password_file }
 
 export bamboo_VAULT_PASSWORD=`cat ~/.ansible/vault_password_file`
+export bamboo_shortJobName="production"
+
+alias xargs='gxargs'
