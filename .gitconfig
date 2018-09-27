@@ -1,7 +1,7 @@
 [user]
   name = Remo Wenger
   email = privat@remowenger.ch
-  #signingkey = CC629882AADF2BB1
+  signingkey = CC629882AADF2BB1
 [core]
   editor = vi
   excludesfile = ~/.gitignore
@@ -14,7 +14,7 @@
 [merge]
   tool = kdiff3
 [commit]
-  #gpgsign = true
+  gpgsign = true
 [log]
   showSignature = true
 [color]
