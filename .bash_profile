@@ -95,3 +95,6 @@ export bamboo_VAULT_PASSWORD=`cat ~/.ansible/vault_password_file`
 export bamboo_shortJobName="production"
 
 alias kubedebug='kubectl run -it kubedebug --image=donch/net-tools --restart=Never --rm -- bash'
+alias klogs='kubectl logs -f'
+alias kpods='kubectl get pods'
+alias kexec='kubectl exec -ti'
