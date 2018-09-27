@@ -66,9 +66,6 @@ ql () { qlmanage -p "$*" >& /dev/null; }
 # Print public facing IP address
 alias myip='curl ifconfig.co'
 
-# Override xargs with GNU xargs
-#alias xargs='gxargs'
-
 
 # Ask for confirmation when 'prod' is in a command string.
 #prod_command_trap () {
@@ -97,4 +94,4 @@ setvault() { ln -f -s ~/.ansible/vault_password_file.$1 ~/.ansible/vault_passwor
 export bamboo_VAULT_PASSWORD=`cat ~/.ansible/vault_password_file`
 export bamboo_shortJobName="production"
 
-alias xargs='gxargs'
+alias kubedebug='kubectl run -it kubedebug --image=donch/net-tools --restart=Never --rm -- bash'
