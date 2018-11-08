@@ -2,6 +2,10 @@
 # https://github.com/geerlingguy/dotfiles/blob/master/.bash_profile
 
 
+# add home-binary to path
+export PATH=$HOME/bin:$PATH
+
+
 # Nicer prompt.
 #export PS1="\[\e[0;32m\]\]\[\] \[\e[1;32m\]\]\t \[\e[0;2m\]\]\w \[\e[0m\]\]\[$\] "
 
@@ -95,6 +99,9 @@ export bamboo_VAULT_PASSWORD=`cat ~/.ansible/vault_password_file`
 export bamboo_shortJobName="production"
 
 alias kubedebug='kubectl run -it kubedebug --image=donch/net-tools --restart=Never --rm -- bash'
-alias klogs='kubectl logs -f'
-alias kpods='kubectl get pods'
-alias kexec='kubectl exec -ti'
+alias kc='k config view | grep "cluster: "'
+alias k8stoken="kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}') | grep token: | awk '{ print \$2 }' | pbcopy"
+alias kss='kubeseal --token $(aws-iam-authenticator token -i kubernetes-infra | jq -r '.status.token') < '
+
+
+alias backup='restic -r s3:s3.amazonaws.com/backup-remowenger --exclude-file=.restic-exclude --verbose backup /Users/remo.wenger'
