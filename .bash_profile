@@ -89,19 +89,38 @@ alias myip='curl ifconfig.co'
 #trap prod_command_trap DEBUG
 
 
+# kubernetes
+# see: https://github.com/kubernetes/website/issues/674
+export KUBE_EDITOR="vim"
+
 # initializes a buildenv environment (mimacom)
 buildenv() { curl -o- "https://raw.githubusercontent.com/mimacom/buildenv/master/init-docker-buildenv.sh?unique=$(uuidgen)" | /bin/bash }
 
 # changes ansible vault password file
 setvault() { ln -f -s ~/.ansible/vault_password_file.$1 ~/.ansible/vault_password_file }
 
+# geoip lookip
+geoip() { curl -o- https://ip-api.io/json/${1}\?api_key\=328585c4-dcbc-4c77-b1b2-442484a1ff8d | jq '.' }
+
 export bamboo_VAULT_PASSWORD=`cat ~/.ansible/vault_password_file`
 export bamboo_shortJobName="production"
 
-alias kubedebug='kubectl run -it kubedebug --image=donch/net-tools --restart=Never --rm -- bash'
-alias kc='k config view | grep "cluster: "'
-alias k8stoken="kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}') | grep token: | awk '{ print \$2 }' | pbcopy"
+#alias kubedebug='kubectl run -it kubedebug --image=donch/net-tools --restart=Never --rm -- bash'
+alias kubedebug='kubectl run -it kubedebug --image=centos:7 --restart=Never --rm -- bash'
+alias kcgc='k config get-contexts'
+#alias k8stoken="kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}') | grep token: | awk '{ print \$2 }'"
+alias k8stoken="kubectl -n kube-system get secret -oname | grep eks-admin-token- | xargs kubectl -nkube-system describe | grep token: | awk '{ print \$2 }' | pbcopy"
 alias kss='kubeseal --token $(aws-iam-authenticator token -i kubernetes-infra | jq -r '.status.token') < '
 
 
 alias backup='restic -r s3:s3.amazonaws.com/backup-remowenger --exclude-file=.restic-exclude --verbose backup /Users/remo.wenger'
+#terraform() { docker run -ti --rm -v "`pwd`:/media/volume/" hashicorp/terraform:0.11.13 terraform $* }
+
+
+# GOLANG
+export GOPATH=$HOME/Documents/go
+
+
+# LANGUAGE SETTINGS
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
