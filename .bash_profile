@@ -87,12 +87,6 @@ alias myip='curl ifconfig.co'
 #}
 #shopt -s extdebug
 #trap prod_command_trap DEBUG
-
-
-# kubernetes
-# see: https://github.com/kubernetes/website/issues/674
-export KUBE_EDITOR="vim"
-
 # initializes a buildenv environment (mimacom)
 buildenv() { curl -o- "https://raw.githubusercontent.com/mimacom/buildenv/master/init-docker-buildenv.sh?unique=$(uuidgen)" | /bin/bash }
 
@@ -102,19 +96,31 @@ setvault() { ln -f -s ~/.ansible/vault_password_file.$1 ~/.ansible/vault_passwor
 # geoip lookip
 geoip() { curl -o- https://ip-api.io/json/${1}\?api_key\=328585c4-dcbc-4c77-b1b2-442484a1ff8d | jq '.' }
 
+export VAULT_PASSWORD=`cat ~/.ansible/vault_password_file`
 export bamboo_VAULT_PASSWORD=`cat ~/.ansible/vault_password_file`
 export bamboo_shortJobName="production"
 
+
+# KUBERNETES
+# see: https://github.com/kubernetes/website/issues/674
+
+export KUBE_EDITOR="vim"
+alias k8sdash='kubectl -n kube-system port-forward svc/kubernetes-dashboard 8080:80'
 #alias kubedebug='kubectl run -it kubedebug --image=donch/net-tools --restart=Never --rm -- bash'
 alias kubedebug='kubectl run -it kubedebug --image=centos:7 --restart=Never --rm -- bash'
-alias kcgc='k config get-contexts'
 #alias k8stoken="kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}') | grep token: | awk '{ print \$2 }'"
 alias k8stoken="kubectl -n kube-system get secret -oname | grep eks-admin-token- | xargs kubectl -nkube-system describe | grep token: | awk '{ print \$2 }' | pbcopy"
-alias kss='kubeseal --token $(aws-iam-authenticator token -i kubernetes-infra | jq -r '.status.token') < '
+alias kss-aws='kubeseal --token $(aws-iam-authenticator token -i kubernetes-infra | jq -r '.status.token') < '
+alias kss='kubeseal --format=yaml'
+alias wkgp='watch kubectl get pods -owide'
 
 
 alias backup='restic -r s3:s3.amazonaws.com/backup-remowenger --exclude-file=.restic-exclude --verbose backup /Users/remo.wenger'
 #terraform() { docker run -ti --rm -v "`pwd`:/media/volume/" hashicorp/terraform:0.11.13 terraform $* }
+
+alias f='fluxctl --k8s-fwd-ns=infra-mgmt'
+alias flog='klf -ninfra-mgmt $(kgp -ninfra-mgmt -l"app=flux" -oname)'
+alias fhlog='klf -ninfra-mgmt $(kgp -ninfra-mgmt -l"app=flux-helm-operator" -oname)'
 
 
 # GOLANG
